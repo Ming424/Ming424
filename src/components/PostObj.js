@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function PostObj({ todo, index, completeTodo, removeTodo,userName }) {
+function PostObj({ todo, index, completeTodo, removeTodo, userName }) {
   const [value, setValue] = React.useState("");
   const [comments, setComments] = useState([
     { user: "user#1", comment: "wow" },
@@ -20,7 +20,7 @@ function PostObj({ todo, index, completeTodo, removeTodo,userName }) {
     e.preventDefault();
     if (!value) return;
     console.log("NEW COMMENT: " + value);
-    const newTodos = [...comments, { user:userName,comment:value }];
+    const newTodos = [...comments, { user: userName, comment: value }];
     setComments(newTodos);
     setValue("");
     /* @UPDATE DB */
@@ -28,14 +28,6 @@ function PostObj({ todo, index, completeTodo, removeTodo,userName }) {
 
   return (
     <div style={mainStyle}>
-      <div style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}>
-        {todo.text}
-        
-          <button onClick={() => completeTodo(index)}>Complete</button>
-          <button onClick={() => removeTodo(index)}>x</button>
-        
-      </div>
-
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Card title</h5>
@@ -44,7 +36,7 @@ function PostObj({ todo, index, completeTodo, removeTodo,userName }) {
             Some quick example text to build on the card title and make up the
             bulk of the card's content.
           </p>
-          <div style={{fontSize:"15px"}}>{renderComments()}</div>
+          <div style={{ fontSize: "15px" }}>{renderComments()}</div>
           <form onSubmit={handleSubmit}>
             <input
               type="text"
@@ -52,6 +44,13 @@ function PostObj({ todo, index, completeTodo, removeTodo,userName }) {
               onChange={(e) => setValue(e.target.value)}
             />
           </form>
+          <div
+            style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}
+          >
+            {todo.text}
+            <button onClick={() => completeTodo(index)}>Complete</button>
+            <button onClick={() => removeTodo(index)}>x</button>
+          </div>
         </div>
       </div>
     </div>
@@ -59,9 +58,9 @@ function PostObj({ todo, index, completeTodo, removeTodo,userName }) {
 }
 
 const mainStyle = {
-    margin:"0px",
-    border: "1px green dashed",
-    paddingBottom: "50px",
-}
+  margin: "0px",
+  border: "1px green dashed",
+  paddingBottom: "10px",
+};
 
 export default PostObj;

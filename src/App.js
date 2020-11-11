@@ -6,7 +6,7 @@ import "./App.css";
  */
 import Header from "./components/layout/Header";
 import FloatObj from "./components/layout/FloatObj";
-import NewPostModal from "./components/layout/NewPostModal";
+import NewPostModal from "./components/NewPostModal";
 import PostObj from "./components/PostObj";
 
 function TodoForm({ addTodo }) {
@@ -35,7 +35,6 @@ function App() {
   /**
    * STATE
    */
-
   const [userName] = useState("Timmy");
   const [newPostModalActive, setNewPostModalActive] = useState(false);
   const [openPostModalActive, setOpenPostModalActive] = useState(false);
@@ -49,11 +48,7 @@ function App() {
     {
       text: "Meet friend for lunch",
       isCompleted: false,
-    },
-    {
-      text: "Build really cool todo app",
-      isCompleted: false,
-    },
+    }
   ]);
 
   /**
@@ -97,6 +92,7 @@ function App() {
   };
 
   const renderPosts = () => {
+    
     return todos.map((todo, index) => (
       <PostObj
         key={index}
@@ -113,8 +109,9 @@ function App() {
     <div className="app">
       <Header userName={userName} handleSearch={handleSearch} numPostInView={numPostInView} updateNumPostInView={updateNumPostInView} />
       <div className="mx-auto" style={containerStyle}>
+      <TodoForm addTodo={addTodo} />
         {renderPosts()}
-        <TodoForm addTodo={addTodo} />
+        
       </div>
       <div className="bt-new-post"></div>
       <div className="float-obj" style={floatObjStyle}>
