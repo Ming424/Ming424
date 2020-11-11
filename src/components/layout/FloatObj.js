@@ -2,20 +2,28 @@ import React from 'react'
 
 function FloatObj(props){
 
+    const newPost = () => {
+        console.log("FLOATOBJ NEW POST");
+        props.newPost()
+
+    }
+
     return (
     <div style={mainStyle} >
-        <div className="mb-50">
+        <div>
             <button type="button" className="btn btn-primary" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} >Back to Top</button>
         </div>
+        <div>&nbsp;</div>
         <div>
-            <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#newPostModal" onClick={() => props.newPost()} >New Post</button>
+        <span className="d-inline-block" tabIndex="0" data-toggle="tooltip" title="Disabled tooltip">
+            <button type="button" className="btn btn-primary" data-toggle="modal"  data-target={"#newPostModal"} onClick={() => newPost()} >New Post</button>
+        </span>
         </div>
     </div>
     )
   }
-
-  const mainStyle ={
-      paddingTop: "5px",
+// data-toggle="modal" data-target="#newPostModal"
+  const mainStyle ={ 
   }
  
 

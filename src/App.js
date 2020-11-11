@@ -9,13 +9,13 @@ import FloatObj from "./components/layout/FloatObj";
 import NewPostModal from "./components/NewPostModal";
 import PostObj from "./components/PostObj";
 
-function TodoForm({ addTodo }) {
-  const [value, setValue] = React.useState("");
+function PostForm({ addPost }) {
+  const [value, setValue] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!value) return;
-    addTodo(value);
+    addPost(value);
     setValue("");
   };
 
@@ -36,68 +36,80 @@ function App() {
    * STATE
    */
   const [userName] = useState("Timmy");
+  const [userId] = useState("001");
   const [newPostModalActive, setNewPostModalActive] = useState(false);
   const [openPostModalActive, setOpenPostModalActive] = useState(false);
   const [numPostInView, setNumPostInView] = useState(5);
 
-  const [todos, setTodos] = React.useState([
+  const [posts, setPosts] = React.useState([
     {
       text: "Learn about React",
       isCompleted: false,
+      user: "Jim",
+      date: "09-April-2020",
+      files: ["a.txt"],
+      postId: "1"
     },
     {
       text: "Meet friend for lunch",
       isCompleted: false,
+      user: "Mohammed",
+      date: "09-Mars-2020",
+      files: ["c.txt","d.txt"],
+      postId: "2"
     }
   ]);
 
   /**
    * FUNCTION
    */
-  const addTodo = (text) => {
-    const newTodos = [...todos, { text }];
-    setTodos(newTodos);
+  const addPost = (text) => {
+    const newPostss = [...posts, { text }];
+    setPosts(newPostss);
   };
 
   const handleSearch = (text) => {
-    console.log("HANDLE SEARCH" + text);
+    console.log("HANDLE SEARCH " + text);
   }
 
   const newPost = (event) => {
-    console.log("NEW POST");
-    setNewPostModalActive(true);
+    console.log("NEW POST " + newPostModalActive);
+    setNewPostModalActive(!newPostModalActive);
+    console.log(newPostModalActive)
   };
 
   const updateNumPostInView = (i) => {
     console.log("New # item in view " + i)
-    setNewPostModalActive(i);
+    setNumPostInView(i);
+    console.log("NEW VALUE " + numPostInView);
   }
 
 
   const completeTodo = (index) => {
-    const newTodos = [...todos];
-    if(newTodos[index].isCompleted==true){
-      newTodos[index].isCompleted = false;
+    const newPosts = [...posts];
+    if(newPosts[index].isCompleted==true){
+      newPosts[index].isCompleted = false;
     } else {
-      newTodos[index].isCompleted = true;
+      newPosts[index].isCompleted = true;
     }
-    
-    setTodos(newTodos);
+    setPosts(newPosts);
   };
 
   const removeTodo = (index) => {
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
+    const newPosts = [...posts];
+    newPosts.splice(index, 1);
+    setPosts(newPosts);
   };
 
   const renderPosts = () => {
-    
-    return todos.map((todo, index) => (
+    var len = numPostInView;
+    if(posts.length<len) len = posts.length
+    console.log("RENDERING " + len + " POSTS")
+    return posts.slice(0,len).map((post, index) => (
       <PostObj
         key={index}
         index={index}
-        todo={todo}
+        post={post}
         completeTodo={completeTodo}
         removeTodo={removeTodo}
         userName={userName}
@@ -108,12 +120,16 @@ function App() {
   return (
     <div className="app">
       <Header userName={userName} handleSearch={handleSearch} numPostInView={numPostInView} updateNumPostInView={updateNumPostInView} />
-      <div className="mx-auto" style={containerStyle}>
-      <TodoForm addTodo={addTodo} />
+      
+      
+      <PostForm addPost={addPost} /> 
+      <div className="mx-auto" style={containerStyle}> 
         {renderPosts()}
-        
       </div>
       <div className="bt-new-post"></div>
+      
+      
+
       <div className="float-obj" style={floatObjStyle}>
         <FloatObj newPost={newPost} />
       </div>
@@ -121,7 +137,11 @@ function App() {
       <NewPostModal
         setNewPostModalActive={setNewPostModalActive}
         newPostModalActive={newPostModalActive}
+        userName={userName}
+        userId={userId}
       />
+       
+
     </div>
   );
 }
@@ -136,8 +156,7 @@ const floatObjStyle = {
 const containerStyle = {
   marginTop: "10px",
   borderRadius: "4px",
-  maxWidth: "500px",
-  border: "1px yellow dashed"
+  maxWidth: "500px", 
 };
 
 
