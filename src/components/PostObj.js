@@ -28,6 +28,7 @@ function PostObj({ post, index, completeTodo, removeTodo, userName }) {
   };
 
   const renderFile = () => {
+    if(!post.files) return; 
     return post.files.map((file,key) => (
       <span>
         <li  onClick={(e) => handleFile()} className="list-group-item">{file}</li>
